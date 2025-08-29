@@ -1,0 +1,71 @@
+<% layout("/layouts/boilerplate") %>
+<br>
+<div class="college">
+    <div class=" col-md-1 logo" >
+        <img  src="https://reck.ac.in/wp-content/uploads/2023/03/rajkiya-engineering-college-kannauj-big-min.png">
+    </div>
+    <div class="col-md-10 info ">
+        <h1>RAJKIYA ENGINEERING COLLEGE KANNAUJ</h1>
+        <h1>UTTAR PRADESH</h1>
+        <h3>(A GOVERNMENT ENGINEERING COLLEGE)</h3>
+    </div>
+  </div>
+<div class="certification">
+    <h1>Department Dashboard</h1>
+</div>
+
+
+ <!-- for indexInfo -->
+ <div class="container mt-5">
+    
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped table-hover">
+        <thead class="table-primary">
+          <tr>
+            <th>Sl. No</th>
+            <th>Students Name</th>
+            <th>Registration No.</th>
+            <th>verification</th>
+            <th>Remarks</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <% department.students.forEach((student, index) => { %>
+                <tr>
+                    <td><%= index + 1 %></td>
+                    <td><%= student.studentName %></td>
+                    <td><%= student.regNo %></td>
+                    <td>
+                        <% 
+                            const currentDepartment = student.departments.find(dep => dep.name === department.username);
+                        %>
+                        <% if (currentDepartment && !currentDepartment.isVerified) { %>
+                            <form action="/department/<%= student._id %>/<%= department.username %>/verify" method="POST" style="display: inline;">
+                                <button type="submit">Verify</button>
+                            </form>
+                        <% } else { %>
+                            <span>Verified</span>
+                        <% } %>
+                    </td>
+                    <td>
+                        <% if (currentDepartment && !currentDepartment.isVerified) { %>
+                            <% if( currentDepartment.remarks){%>
+                                <p><%= currentDepartment.remarks %></p>
+                            <%}%>
+                            <form action="/department/<%= student._id %>/<%= department.username %>/remarks" method="POST">
+                                <label for="remarks-<%= index %>">Add Remarks:</label>
+                                <textarea name="remarks" id="remarks-<%= index %>" rows="3" cols="30"></textarea>
+                                <button type="submit">Submit</button>
+                            </form>
+                        <% } else if (currentDepartment && currentDepartment.remarks) { %>
+                            <p><%= currentDepartment.remarks %></p>
+                        <% } %>
+                    </td>
+                </tr>
+            <% }) %>
+          
+        </tbody>
+      </table>
+    </div>
+  </div>

@@ -1,0 +1,70 @@
+/* info.ejs */
+.college {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .logo img {
+    max-width: 100px;
+    height: auto;
+  }
+  
+  .info {
+    text-align: left;
+  }
+  
+  .info h1 {
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .info h3 {
+    font-size: 16px;
+    color: #666;
+  }
+  
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  
+    .info {
+      text-align: center;
+      margin-top: 20px;
+    }
+  
+    .logo img {
+      max-width: 80px;
+    }
+  
+    .info h1 {
+      font-size: 20px;
+    }
+  
+    .info p {
+      font-size: 14px;
+    }
+  }
+  
+  .certification h1{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    text-decoration: underline;
+  }
+
+  /* index.ejs */
+.bt-h1 h1{
+    color: red;
+}

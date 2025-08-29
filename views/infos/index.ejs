@@ -1,0 +1,94 @@
+<% layout("/layouts/boilerplate") %>
+
+
+  <body>
+
+
+    <div class="container mt-5">
+      <h2 class="text-center mb-4">Department Approval for <%= student.studentName %>
+      </h2>
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover">
+          <thead class="table-primary">
+            <tr>
+              <th>Sl. No</th>
+              <th>Office/Department</th>
+              <th>Signature of the Head Concerned</th>
+              <th>Date</th>
+              <th>Remarks</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <% student.departments.forEach((dept,count)=> { %>
+              <tr>
+                <td>
+                  <%=count +1 %>
+                </td>
+                <td>
+                  <%= dept.name %>
+                </td>
+                <td>
+                  <% if (dept.isVerified) { %>
+                    Verified
+                    <% } else { %>
+
+                      <form action="/student/<%= student._id %>/<%= dept.name %>/verify" method="POST"
+                        style="display: inline" onsubmit="return handleVerifyClick(event);">
+                        <button class="btn btn-success verify-button">Verify</button>
+                      </form>
+
+                      <% } %>
+                </td>
+                <td>
+                  <%= dept.date ? dept.date.toLocaleDateString() : '' %>
+                </td>
+                <td>
+                  <%= dept.remarks || 'N/A' %>
+                </td>
+              </tr>
+              <% }) %>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div>
+      <p><b>Note :</b> Students are required to submit "NO Dues Certificate" to the Dean Office.</p>
+    </div>
+    <form method="get" action="/student/<%=student._id%>/declaration">
+      <button class="btn btn-primary">submit</button>
+    </form>
+
+
+    <script>
+      function handleVerifyClick(event) {
+        // Prevent the default form submission
+        event.preventDefault();
+    
+        // Log the form submission event
+        console.log("Form submission prevented:", event.target);
+    
+        // Find the button inside the form
+        const button = event.target.querySelector('.verify-button');
+    
+        if (button) {
+          // Update button text and disable it
+          button.textContent = 'Verifying...';
+          button.disabled = true;
+    
+          // Log button update for verification
+          console.log("Button text updated to 'Verifying...'");
+        } else {
+          console.error("Verify button not found inside the form.");
+        }
+    
+        // Submit the form programmatically after logging and updating the button
+        setTimeout(() => {
+          event.target.submit();
+        }, 1000); // Add a delay to see the changes before form submission
+      }
+    </script>
+    
+    
+  </body>
